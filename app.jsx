@@ -1254,8 +1254,8 @@ function VidyyouStudio() {
           position: sticky; top: 0; z-index: 100;
           backdrop-filter: blur(20px);
         }
-        .vy-header-left { display: flex; align-items: center; gap: 14; }
-        .vy-header-right { display: flex; align-items: center; gap: 10; }
+        .vy-header-left { display: flex; align-items: center; gap: 14px; }
+        .vy-header-right { display: flex; align-items: center; gap: 10px; }
         .vy-logo-wrap {
           width: 40px; height: 40px; border-radius: 12px; overflow: hidden;
           box-shadow: 0 0 24px rgba(99,102,241,0.3), inset 0 0 0 1px rgba(99,102,241,0.2);
@@ -1269,7 +1269,7 @@ function VidyyouStudio() {
         .vy-tagline { margin: 0; font-size: 10px; color: #6366f1; letter-spacing: 1.5px; font-weight: 500; }
 
         .vy-key-badge {
-          display: flex; align-items: center; gap: 5;
+          display: flex; align-items: center; gap: 5px;
           background: rgba(52,211,153,0.1); border: 1px solid rgba(52,211,153,0.2);
           padding: 4px 12px; border-radius: 8px;
           color: #34d399; font-size: 11px; font-weight: 500;
@@ -1310,7 +1310,7 @@ function VidyyouStudio() {
         .vy-card-header {
           padding: 14px 20px;
           border-bottom: 1px solid rgba(255,255,255,0.04);
-          display: flex; align-items: center; gap: 10;
+          display: flex; align-items: center; gap: 10px;
         }
         .vy-card-body { padding: 20px; }
 
@@ -1327,7 +1327,7 @@ function VidyyouStudio() {
 
         /* ── Mode Bar ── */
         .vy-mode-bar {
-          display: flex; gap: 4;
+          display: flex; gap: 4px;
           background: rgba(255,255,255,0.02);
           border: 1px solid rgba(255,255,255,0.06);
           border-radius: 14px; padding: 4px;
@@ -1337,7 +1337,7 @@ function VidyyouStudio() {
           flex: 1; padding: 12px 14px; border-radius: 10px;
           border: none; cursor: pointer;
           background: transparent; color: #6b7280;
-          display: flex; align-items: center; justify-content: center; gap: 8;
+          display: flex; align-items: center; justify-content: center; gap: 8px;
           font-weight: 500; font-size: 14px; font-family: 'Outfit';
           transition: all 0.25s;
         }
@@ -1369,7 +1369,7 @@ function VidyyouStudio() {
         .vy-btn {
           padding: 10px 20px; border-radius: 10px; border: none;
           font-size: 14px; font-weight: 600; cursor: pointer;
-          display: inline-flex; align-items: center; gap: 8;
+          display: inline-flex; align-items: center; gap: 8px;
           transition: all 0.2s; font-family: 'Outfit';
         }
         .vy-btn.disabled { opacity: 0.4; cursor: not-allowed; pointer-events: none; }
@@ -1401,7 +1401,7 @@ function VidyyouStudio() {
           padding: 6px 12px; border-radius: 7px; font-size: 11px; font-weight: 600;
           text-decoration: none; cursor: pointer;
           background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
-          color: #9ca3af; display: inline-flex; align-items: center; gap: 4;
+          color: #9ca3af; display: inline-flex; align-items: center; gap: 4px;
           transition: all 0.2s;
         }
         .vy-btn-outline-sm:hover { border-color: rgba(255,255,255,0.15); color: #d1d5db; }
@@ -1472,7 +1472,7 @@ function VidyyouStudio() {
         .vy-error-bar {
           background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.2);
           border-radius: 10px; padding: 10px 14px; margin-bottom: 16px;
-          display: flex; align-items: center; gap: 8;
+          display: flex; align-items: center; gap: 8px;
           color: #fca5a5; font-size: 13px;
           animation: fadeIn 0.2s ease;
         }
@@ -1488,12 +1488,12 @@ function VidyyouStudio() {
         }
         .vy-settings-body { padding: 20px; }
         .vy-key-row { margin-bottom: 14px; }
-        .vy-key-label { display: flex; align-items: center; gap: 8; margin-bottom: 6; font-size: 13px; }
-        .vy-key-input-row { display: flex; gap: 6; }
+        .vy-key-label { display: flex; align-items: center; gap: 8px; margin-bottom: 6; font-size: 13px; }
+        .vy-key-input-row { display: flex; gap: 6px; }
 
         /* ── Status ── */
         .vy-status-line {
-          display: flex; align-items: center; gap: 8; margin-top: 12;
+          display: flex; align-items: center; gap: 8px; margin-top: 12;
           color: #818cf8; font-size: 13px;
         }
         .vy-spin { animation: spin 1s linear infinite; }
@@ -1514,7 +1514,7 @@ function VidyyouStudio() {
         .vy-audio-player { flex: 1; border-radius: 8px; height: 36px; }
 
         /* ── Style Grids ── */
-        .vy-grid-styles { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 6; margin-bottom: 14; }
+        .vy-grid-styles { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 6px; margin-bottom: 14; }
         .vy-style-chip {
           padding: 10px 8px; border-radius: 8px; cursor: pointer; text-align: left;
           border: 1.5px solid rgba(255,255,255,0.06);
@@ -1530,12 +1530,12 @@ function VidyyouStudio() {
         .vy-style-chip-desc { font-size: 10px; color: #4b5563; margin-top: 2px; }
 
         /* ── Preset Grids ── */
-        .vy-grid-presets { display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 6; margin-bottom: 14; }
+        .vy-grid-presets { display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 6px; margin-bottom: 14; }
         .vy-preset-btn {
           padding: 10px 6px; border-radius: 10px; cursor: pointer;
           border: 1.5px solid rgba(255,255,255,0.06);
           background: rgba(255,255,255,0.02);
-          display: flex; flex-direction: column; align-items: center; gap: 4;
+          display: flex; flex-direction: column; align-items: center; gap: 4px;
           transition: all 0.2s;
         }
         .vy-preset-btn:hover { border-color: rgba(255,255,255,0.12); }
@@ -1548,7 +1548,7 @@ function VidyyouStudio() {
         .vy-preset-btn.active .vy-preset-label { color: var(--accent, #c7d2fe); }
 
         /* ── Provider Grid ── */
-        .vy-grid-providers { display: grid; grid-template-columns: 1fr 1fr; gap: 10; margin-bottom: 14; }
+        .vy-grid-providers { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14; }
         .vy-provider-card {
           padding: 14px; border-radius: 12px; cursor: pointer; text-align: left;
           border: 1.5px solid rgba(255,255,255,0.06);
@@ -1583,7 +1583,7 @@ function VidyyouStudio() {
 
         /* ── Scene Row ── */
         .vy-scene-row {
-          display: flex; gap: 12; margin-bottom: 10; padding: 10px;
+          display: flex; gap: 12px; margin-bottom: 10; padding: 10px;
           border-radius: 10px; border: 1px solid rgba(255,255,255,0.04);
           background: rgba(255,255,255,0.01); transition: border-color 0.2s;
         }
@@ -1625,7 +1625,7 @@ function VidyyouStudio() {
 
         /* ── Playback Controls ── */
         .vy-playback-controls {
-          display: flex; align-items: center; justify-content: center; gap: 10;
+          display: flex; align-items: center; justify-content: center; gap: 10px;
           margin-bottom: 10;
         }
         .vy-play-btn {
@@ -1664,7 +1664,7 @@ function VidyyouStudio() {
 
         /* ── Sub Tabs ── */
         .vy-sub-tabs {
-          display: flex; gap: 4;
+          display: flex; gap: 4px;
           background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05);
           border-radius: 12px; padding: 3px; margin-bottom: 14;
         }
@@ -1673,7 +1673,7 @@ function VidyyouStudio() {
           border: none; cursor: pointer;
           background: transparent; color: #6b7280;
           font-weight: 500; font-size: 13px;
-          display: flex; align-items: center; justify-content: center; gap: 6;
+          display: flex; align-items: center; justify-content: center; gap: 6px;
           transition: all 0.2s;
         }
         .vy-sub-tab.active {

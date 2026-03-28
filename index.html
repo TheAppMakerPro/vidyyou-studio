@@ -65,14 +65,20 @@
   <!-- App -->
   <script type="text/babel" data-type="module" src="app.jsx"></script>
 
-  <script type="text/babel">
-    window.addEventListener('load', () => {
-      setTimeout(() => {
-        const splash = document.getElementById('splash');
+  <script>
+    // Splash dismiss — plain JS, no Babel dependency
+    window.addEventListener('load', function() {
+      setTimeout(function() {
+        var splash = document.getElementById('splash');
         if (splash) splash.classList.add('hide');
-        setTimeout(() => splash?.remove(), 600);
-      }, 800);
+        setTimeout(function() { if (splash) splash.remove(); }, 600);
+      }, 1200);
     });
+    // Fallback: dismiss splash after 8s no matter what
+    setTimeout(function() {
+      var splash = document.getElementById('splash');
+      if (splash) { splash.classList.add('hide'); setTimeout(function() { if (splash) splash.remove(); }, 600); }
+    }, 8000);
   </script>
 
   <!-- Service Worker Registration -->
