@@ -1,5 +1,5 @@
 const { useState, useRef, useCallback, useEffect } = React;
-const { Upload, Wand2, Image, User, Camera, Layers, Play, Download, Settings, Sparkles, X, ChevronRight, Loader2, Check, AlertCircle, Film, Palette, ImagePlus, RotateCcw, Pause, SkipForward, SkipBack, Zap, Eye, RefreshCw, ArrowRight, Lock, Unlock, MonitorPlay, SlidersHorizontal, Music, Mic, FileText, PlusCircle, Trash2, ChevronDown, ChevronUp, Volume2, VolumeX, Clapperboard } = lucideReact;
+const { Upload, Wand2, Image, User, Camera, Layers, Play, Download, Settings, Sparkles, X, ChevronRight, Loader2, Check, AlertCircle, Film, Palette, ImagePlus, RotateCcw, Pause, SkipForward, SkipBack, Zap, Eye, RefreshCw, ArrowRight, Lock, Unlock, MonitorPlay, SlidersHorizontal, Music, Mic, FileText, PlusCircle, Trash2, ChevronDown, ChevronUp, Volume2, VolumeX, Clapperboard } = (typeof LucideReact !== 'undefined' ? LucideReact : lucideReact);
 
 /* ============================================================
    VIDYYOU STUDIO — AI Video + Music Video Suite
