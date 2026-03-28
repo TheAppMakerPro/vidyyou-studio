@@ -70,10 +70,13 @@ const hfAPI = async (model, body, token, isJSON = false, retries = 3) => {
   }
 };
 
-const claudeAPI = async (systemPrompt, userPrompt) => {
-  const res = await fetch("https://api.anthropic.com/v1/messages", {
+const claudeAPI = async (systemPrompt, userPrompt, apiKey) => {
+  const res = await fetch("/api/claude", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      "x-api-key": apiKey,
+    },
     body: JSON.stringify({
       model: "claude-sonnet-4-20250514",
       max_tokens: 1000,
@@ -81,6 +84,10 @@ const claudeAPI = async (systemPrompt, userPrompt) => {
       messages: [{ role: "user", content: userPrompt }],
     }),
   });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.error?.message || err.error || `Claude API ${res.status}`);
+  }
   const data = await res.json();
   return data.content?.[0]?.text || "";
 };
@@ -252,6 +259,7 @@ const renderMusicVideo = async (scenes, audioUrl, fps, onProgress) => {
 function VidyyouStudio() {
   // ── Global State ──
   const [hfToken, setHfToken] = useState(() => localStorage.getItem("vy_hf") || "");
+  const [claudeKey, setClaudeKey] = useState(() => localStorage.getItem("vy_claude") || "");
   const [tokenLocked, setTokenLocked] = useState(() => !!(localStorage.getItem("vy_hf") || "").startsWith("hf_"));
   const [activeMode, setActiveMode] = useState("musicvideo");
   const [error, setError] = useState("");
@@ -330,6 +338,7 @@ function VidyyouStudio() {
   // ── Save keys to localStorage ──
   const saveKeys = () => {
     localStorage.setItem("vy_hf", hfToken);
+    localStorage.setItem("vy_claude", claudeKey);
     localStorage.setItem("vy_ls", JSON.stringify(lsApiKeys));
     if (hfToken.startsWith("hf_")) { setTokenLocked(true); setShowSetup(false); setError(""); }
     setShowSettings(false);
@@ -574,6 +583,7 @@ function VidyyouStudio() {
   // ── MusicVideo: Generate Storyboard with Claude ──
   const generateStoryboard = useCallback(async () => {
     if (!audioData) return;
+    if (!claudeKey) { setError("Add your Anthropic API key in Settings to generate storyboards."); return; }
     setIsGeneratingStoryboard(true); setError(""); setMvStatus("AI creating storyboard...");
     try {
       const style = MV_STYLES.find(s => s.id === mvStyle);
@@ -581,7 +591,7 @@ function VidyyouStudio() {
       const sceneDur = audioData.duration / numScenes;
       const systemPrompt = `You are a music video director AI. Generate a storyboard as a JSON array. Each scene has: "prompt" (detailed image generation prompt, max 80 words, must include "${style.label}" style), "lyrics" (short lyric line to overlay, max 10 words, or empty string), "kenBurns" object with "startScale" (1.0-1.1), "endScale" (1.1-1.25), "panX" (-0.03 to 0.03), "panY" (-0.02 to 0.02). Respond ONLY with the JSON array, no markdown, no explanation.`;
       const userPrompt = `Create ${numScenes} scenes for a ${style.label} style music video. Duration: ${Math.round(audioData.duration)}s, BPM: ${audioData.bpm}. Each scene is ~${Math.round(sceneDur)}s. ${lyrics ? `Lyrics:\n${lyrics}` : "No lyrics provided."}. Visual style: ${style.desc}. Make each scene distinct but cohesive.`;
-      const result = await claudeAPI(systemPrompt, userPrompt);
+      const result = await claudeAPI(systemPrompt, userPrompt, claudeKey);
       let parsed;
       try { const clean = result.replace(/```json|```/g, "").trim(); parsed = JSON.parse(clean); }
       catch { throw new Error("Failed to parse storyboard. Try again."); }
@@ -594,7 +604,7 @@ function VidyyouStudio() {
       setMvStatus(`${newScenes.length} scenes planned!`);
     } catch (e) { setError(`Storyboard: ${e.message}`); }
     finally { setIsGeneratingStoryboard(false); }
-  }, [audioData, mvStyle, lyrics]);
+  }, [audioData, mvStyle, lyrics, claudeKey]);
 
   // ── MusicVideo: Generate Images ──
   const generateSceneImages = useCallback(async () => {
@@ -679,7 +689,7 @@ function VidyyouStudio() {
           {tokenLocked && (
             <div className="vy-key-badge">
               <Check size={11} />
-              <span>{[hfToken && "HF", lsApiKeys.synclabs && "Sync", lsApiKeys.kling && "Kling", lsApiKeys.hedra && "Hedra", lsApiKeys.did && "D-ID"].filter(Boolean).join(" \u00B7 ") || "Ready"}</span>
+              <span>{[hfToken && "HF", claudeKey && "Claude", lsApiKeys.synclabs && "Sync", lsApiKeys.kling && "Kling", lsApiKeys.hedra && "Hedra", lsApiKeys.did && "D-ID"].filter(Boolean).join(" \u00B7 ") || "Ready"}</span>
             </div>
           )}
           <button onClick={() => setShowSettings(!showSettings)} className={`vy-icon-btn ${showSettings ? "active" : ""}`}>
@@ -714,6 +724,21 @@ function VidyyouStudio() {
                   <input type="password" value={hfToken} onChange={e => setHfToken(e.target.value)} placeholder="hf_..." className="vy-input" />
                   <a href="https://huggingface.co/settings/tokens" target="_blank" rel="noopener noreferrer" className="vy-btn-outline-sm">Get Key</a>
                 </div>
+              </div>
+
+              {/* Anthropic Claude */}
+              <div className="vy-key-row">
+                <div className="vy-key-label">
+                  <div className={`vy-dot ${claudeKey.startsWith("sk-") ? "green" : "red"}`} />
+                  <strong>Anthropic Claude</strong>
+                  <span className="vy-badge-required">FOR STORYBOARD</span>
+                  <span className="vy-text-muted" style={{marginLeft:"auto",fontSize:11}}>Pay-per-use</span>
+                </div>
+                <div className="vy-key-input-row">
+                  <input type="password" value={claudeKey} onChange={e => setClaudeKey(e.target.value)} placeholder="sk-ant-..." className="vy-input" />
+                  <a href="https://console.anthropic.com/settings/keys" target="_blank" rel="noopener noreferrer" className="vy-btn-outline-sm">Get Key</a>
+                </div>
+                <p className="vy-text-muted" style={{marginTop:4,fontSize:11}}>Powers AI storyboard generation for MusicVideo mode. Get a key at console.anthropic.com</p>
               </div>
 
               <div className="vy-divider" />
